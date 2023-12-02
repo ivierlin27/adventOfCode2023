@@ -25,10 +25,20 @@ public abstract class NumberParser {
 
     protected abstract String concat(String var1, String var2);
 
-    public Optional<String> findValue() {
+    public static int parseNumbersAndWordNumbersFromText(String line) {
+        Optional<String> firstValue = (new ForwardParser(line)).findValue();
+        Optional<String> lastValue = (new BackwardParser(line)).findValue();
+        if (firstValue.isPresent() && lastValue.isPresent()) {
+            return Integer.parseInt(firstValue.get() + lastValue.get());
+        } else {
+            return 0;
+        }
+    }
+
+    protected Optional<String> findValue() {
         String temp = "";
 
-        for(int x = this.initialValue; this.evaluate(x); x = this.next(x)) {
+        for (int x = this.initialValue; this.evaluate(x); x = this.next(x)) {
             char character = this.line.charAt(x);
             if (Character.isDigit(character)) {
                 return Optional.of(Character.toString(character));
