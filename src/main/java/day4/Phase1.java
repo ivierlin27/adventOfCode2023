@@ -3,18 +3,14 @@ package main.java.day4;
 import main.java.domain.Input;
 import main.java.day4.domain.Scratchcard;
 
-import static main.java.day4.ScratchcardParser.parseScratchcard;
+import static main.java.day4.ScratchcardUtil.calculateNumberOfWinnings;
+import static main.java.day4.ScratchcardUtil.parseScratchcard;
 
 public class Phase1 {
     protected static int calculateWinnings(Input input) {
         Scratchcard scratchcard = parseScratchcard(input.getCurrentLine());
-        return processScratchcard(scratchcard);
-    }
-
-    private static int processScratchcard(Scratchcard scratchcard) {
-        return calculateDoublings(Math.toIntExact(scratchcard.getMyNumbers().stream()
-                .filter(myNumber -> scratchcard.getWinningNumbers().contains(myNumber))
-                .count()));
+        int winningCount = calculateNumberOfWinnings(scratchcard);
+        return calculateDoublings(winningCount);
     }
 
     private static int calculateDoublings(int winningCount) {
