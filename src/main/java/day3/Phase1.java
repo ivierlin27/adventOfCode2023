@@ -17,12 +17,13 @@ public class Phase1 {
     private Line previousLine;
 
     protected int parseEngineDiagram(Input input) {
+        // optimization to re-use parsed next line as current if available
+        currentLine = Objects.requireNonNullElseGet(nextLine, () -> parseLine(input.getCurrentLineNumber(), input.getCurrentLine()));
         if (!input.isLastLine()) {
-            nextLine = parseLine(input.getNextLine());
+            nextLine = parseLine(input.getCurrentLineNumber() + 1, input.getNextLine());
         } else {
             nextLine = null;
         }
-        currentLine = parseLine(input.getCurrentLine());
 
         int lineValue = checkLineForEngineParts();
         previousLine = currentLine;

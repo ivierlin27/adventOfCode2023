@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EngineDiagramParser {
     private static final Character JUNK = '.';
-    protected static Line parseLine(String line) {
+    protected static Line parseLine(int currentLineNumber, String line) {
         StringBuilder temp = new StringBuilder();
         List<Number> numbers = new ArrayList<>();
         List<Symbol> symbols = new ArrayList<>();
@@ -24,7 +24,7 @@ public class EngineDiagramParser {
                     temp = new StringBuilder();
                 }
             } else if (character != JUNK) {
-                symbols.add(new Symbol(x));
+                symbols.add(new Symbol(currentLineNumber, x));
             }
         }
 
@@ -32,11 +32,11 @@ public class EngineDiagramParser {
     }
 
     private static boolean lastCharacterInLine(int nextCharacterIndex, String line) {
-        return nextCharacterIndex + 1 == line.length();
+        return nextCharacterIndex >= line.length();
     }
 
     private static boolean nextCharacterNotNumber(int nextCharacterIndex, String line) {
-        return !Character.isDigit(line.charAt(nextCharacterIndex + 1));
+        return !Character.isDigit(line.charAt(nextCharacterIndex));
     }
 
     private static int posAtBeginningOfNumber(int posAtEnd, StringBuilder numberString) {

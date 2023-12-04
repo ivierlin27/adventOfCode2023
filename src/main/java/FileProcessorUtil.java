@@ -15,14 +15,15 @@ public class FileProcessorUtil {
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
+            int lineNumber = 1;
             while (line != null) {
                 String currentLine = line;
                 // read the next line before processing
                 line = reader.readLine();
-                Input input = new Input(currentLine, line);
+                Input input = new Input(lineNumber, currentLine, line);
 
                 total += processor.apply(input);
-                System.out.println(" -> total: " + total);
+                lineNumber++;
             }
         } catch (IOException ioException) {
             // whatever
