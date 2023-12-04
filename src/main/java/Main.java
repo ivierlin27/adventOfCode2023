@@ -14,5 +14,6 @@ public class Main {
         System.out.println("Day 3, phase 1: " + Day3.phase1());
         System.out.println("Day 3, phase 2: " + Day3.phase2());
         System.out.println("Day 4, phase 1: " + Day4.phase1());
+        System.out.println("Day 4, phase 2: " + Day4.phase2());
     }
 }
