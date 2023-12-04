@@ -1,11 +1,13 @@
 package main.java.day1.parser;
 
+import main.java.domain.Input;
+
 import java.util.Optional;
 
 public class Phase1Parser {
-    public static int parseNumbersFromText(String line) {
-        Optional<String> firstNumber = findFirstNumber(line);
-        Optional<String> lastNumber = findLastNumber(line);
+    public static int parseNumbersFromText(Input input) {
+        Optional<String> firstNumber = findFirstNumber(input.getCurrentLine());
+        Optional<String> lastNumber = findLastNumber(input.getCurrentLine());
         if (firstNumber.isPresent() && lastNumber.isPresent()) {
             return Integer.parseInt(firstNumber.get() + lastNumber.get());
         } else {

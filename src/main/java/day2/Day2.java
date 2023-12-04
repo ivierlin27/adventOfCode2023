@@ -1,6 +1,7 @@
 package main.java.day2;
 
 import main.java.day2.domain.Game;
+import main.java.domain.Input;
 
 import static main.java.FileProcessorUtil.processFile;
 import static main.java.day2.PowerCalculator.calculateGamePower;
@@ -19,16 +20,16 @@ public class Day2 {
         return processFile(Day2::calculateFewestStones, INPUT_FILE);
     }
 
-    private static int parseGameValidity(String line) {
-        Game game = parseGame(line);
+    private static int parseGameValidity(Input input) {
+        Game game = parseGame(input.getCurrentLine());
         if (Validator.isValid(game)) {
             return game.getNumber();
         }
         return 0;
     }
 
-    private static int calculateFewestStones(String line) {
-        Game game = parseGame(line);
+    private static int calculateFewestStones(Input input) {
+        Game game = parseGame(input.getCurrentLine());
         return calculateGamePower(game);
     }
 }

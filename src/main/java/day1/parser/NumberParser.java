@@ -1,5 +1,7 @@
 package main.java.day1.parser;
 
+import main.java.domain.Input;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,9 +27,9 @@ public abstract class NumberParser {
 
     protected abstract String concat(String var1, String var2);
 
-    public static int parseNumbersAndWordNumbersFromText(String line) {
-        Optional<String> firstValue = (new ForwardParser(line)).findValue();
-        Optional<String> lastValue = (new BackwardParser(line)).findValue();
+    public static int parseNumbersAndWordNumbersFromText(Input input) {
+        Optional<String> firstValue = (new ForwardParser(input.getCurrentLine())).findValue();
+        Optional<String> lastValue = (new BackwardParser(input.getCurrentLine())).findValue();
         if (firstValue.isPresent() && lastValue.isPresent()) {
             return Integer.parseInt(firstValue.get() + lastValue.get());
         } else {
