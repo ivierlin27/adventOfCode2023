@@ -6,7 +6,10 @@ import static main.java.FileProcessorUtil.processFile;
 
 // Phase 1: 29588814 @ 9:20am
 // Phase 1: 29588820 @ 9:32am
-// Phase 1: 261668924 @ 9:38am
+// Phase 1: 261668924 @ 9:38am (correct!)
+// Phase 2: 1167103021 @ 11:17am
+// Phase 2: 1167103021 @ 1:27pm
+// Phase 2: 24261545 @ 1:46pm (correct! but slow at 16m 55s)
 public class Day5 {
     private static final String SEEDS_INPUT_FILE = "src/main/resources/day5/seeds.txt";
     private static final String SEED_TO_SOIL_INPUT_FILE = "src/main/resources/day5/seed-to-soil.txt";
@@ -22,6 +25,13 @@ public class Day5 {
         loadFiles(almanac);
 
         return Phase1.findLowestLocation(almanac);
+    }
+
+    public static long phase2() {
+        Almanac almanac = new Almanac();
+        loadFiles(almanac);
+
+        return Phase2.findLowestLocation(almanac);
     }
 
     private static void loadFiles(Almanac almanac) {
