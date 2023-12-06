@@ -16,7 +16,7 @@ public class Phase1 {
     private Line currentLine;
     private Line previousLine;
 
-    protected int parseEngineDiagram(Input input) {
+    protected long parseEngineDiagram(Input input) {
         // optimization to re-use parsed next line as current if available
         currentLine = Objects.requireNonNullElseGet(nextLine, () -> parseLine(input.getCurrentLineNumber(), input.getCurrentLine()));
         if (!input.isLastLine()) {

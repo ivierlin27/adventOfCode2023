@@ -19,7 +19,7 @@ public class Phase2 {
 
     // guess 79579614 at 9:51pm
     // guess 80694070 at 10:18pm
-    protected int findGears(Input input) {
+    protected long findGears(Input input) {
         // optimization to re-use parsed next line as current if available
         currentLine = Objects.requireNonNullElseGet(nextLine, () -> parseLine(input.getCurrentLineNumber(), input.getCurrentLine()));
         if (!input.isLastLine()) {

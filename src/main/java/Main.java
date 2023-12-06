@@ -13,17 +13,18 @@ import java.util.function.Supplier;
 
 public class Main {
     public static void main(String[] args) {
-        duration("Day 1, phase 1: ", Day1::phase1);
-        duration("Day 1, phase 2: ", Day1::phase2);
-        duration("Day 2, phase 1: ", Day2::phase1);
-        duration("Day 2, phase 2: ", Day2::phase2);
-        duration("Day 3, phase 1: ", Day3::phase1);
-        duration("Day 3, phase 2: ", Day3::phase2);
-        duration("Day 4, phase 1: ", Day4::phase1);
-        duration("Day 4, phase 2: ", Day4::phase2);
-        duration("Day 5, phase 1: ", Day5::phase1);
+//        duration("Day 1, phase 1: ", Day1::phase1);
+//        duration("Day 1, phase 2: ", Day1::phase2);
+//        duration("Day 2, phase 1: ", Day2::phase1);
+//        duration("Day 2, phase 2: ", Day2::phase2);
+//        duration("Day 3, phase 1: ", Day3::phase1);
+//        duration("Day 3, phase 2: ", Day3::phase2);
+//        duration("Day 4, phase 1: ", Day4::phase1);
+//        duration("Day 4, phase 2: ", Day4::phase2);
+//        duration("Day 5, phase 1: ", Day5::phase1);
 //        duration("Day 5, phase 2: ", Day5::phase2); // too slow!
-        duration("Day 6, phase 1: ", Day6::phase1);
+//        duration("Day 6, phase 1: ", Day6::phase1);
+        duration("Day 6, phase 2: ", Day6::phase2);
     }
 
     private static <T> void duration(String message, Supplier<? extends T> function) {

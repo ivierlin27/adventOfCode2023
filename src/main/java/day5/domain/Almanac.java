@@ -51,7 +51,7 @@ public class Almanac {
         return humidityToLocationMap;
     }
 
-    public int parseSeeds(Input input) {
+    public long parseSeeds(Input input) {
         if (input.getCurrentLine().startsWith("seeds")) {
             seeds = Arrays.stream(input.getCurrentLine()
                             .split(":")[1].trim()
@@ -62,37 +62,37 @@ public class Almanac {
         return 0;
     }
 
-    public int parseSeedToSoil(Input input) {
+    public long parseSeedToSoil(Input input) {
         addToMap(input.getCurrentLine(), seedToSoilMap);
         return 0;
     }
 
-    public int parseSoilToFertilizer(Input input) {
+    public long parseSoilToFertilizer(Input input) {
         addToMap(input.getCurrentLine(), soilToFertilizerMap);
         return 0;
     }
 
-    public int parseFertilizerToWater(Input input) {
+    public long parseFertilizerToWater(Input input) {
         addToMap(input.getCurrentLine(), fertilizerToWaterMap);
         return 0;
     }
 
-    public int parseWaterToLight(Input input) {
+    public long parseWaterToLight(Input input) {
         addToMap(input.getCurrentLine(), waterToLightMap);
         return 0;
     }
 
-    public int parseLightToTemperature(Input input) {
+    public long parseLightToTemperature(Input input) {
         addToMap(input.getCurrentLine(), lightToTemperatureMap);
         return 0;
     }
 
-    public int parseTemperatureToHumidity(Input input) {
+    public long parseTemperatureToHumidity(Input input) {
         addToMap(input.getCurrentLine(), temperatureToHumidityMap);
         return 0;
     }
 
-    public int parseHumidityToLocation(Input input) {
+    public long parseHumidityToLocation(Input input) {
         addToMap(input.getCurrentLine(), humidityToLocationMap);
         return 0;
     }

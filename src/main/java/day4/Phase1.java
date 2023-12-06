@@ -7,7 +7,7 @@ import static main.java.day4.ScratchcardUtil.calculateNumberOfWinnings;
 import static main.java.day4.ScratchcardUtil.parseScratchcard;
 
 public class Phase1 {
-    protected static int calculateWinnings(Input input) {
+    protected static long calculateWinnings(Input input) {
         Scratchcard scratchcard = parseScratchcard(input.getCurrentLine());
         int winningCount = calculateNumberOfWinnings(scratchcard);
         return calculateDoublings(winningCount);

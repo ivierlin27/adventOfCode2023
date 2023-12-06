@@ -11,7 +11,7 @@ import static main.java.day4.ScratchcardUtil.parseScratchcard;
 
 public class Phase2 {
     Map<Integer, Integer> cardNumberCountMap = new HashMap<>();
-    protected int calculateNumberScratchcards(Input input) {
+    protected long calculateNumberScratchcards(Input input) {
         Scratchcard scratchcard = parseScratchcard(input.getCurrentLine());
         int winningCount = calculateNumberOfWinnings(scratchcard);
 

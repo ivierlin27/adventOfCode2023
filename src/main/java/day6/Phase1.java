@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Phase1 {
-    public static int race(Input input) {
+    public static long race(Input input) {
         if (!input.isLastLine()) {
             List<Integer> times = Arrays.stream(input.getCurrentLine().split(":")[1].trim().split("\\s+"))
                     .map(Integer::parseInt)

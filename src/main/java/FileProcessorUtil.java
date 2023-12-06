@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 public class FileProcessorUtil {
 
-    public static int processFile(Function<Input, Integer> processor, String inputFile) {
+    public static long processFile(Function<Input, Long> processor, String inputFile) {
         int total = 0;
         try (FileReader fileReader =  new FileReader(inputFile)) {
             BufferedReader reader = new BufferedReader(fileReader);

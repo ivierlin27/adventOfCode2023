@@ -5,7 +5,7 @@ import main.java.domain.Input;
 import java.util.Optional;
 
 public class Phase1Parser {
-    public static int parseNumbersFromText(Input input) {
+    public static long parseNumbersFromText(Input input) {
         Optional<String> firstNumber = findFirstNumber(input.getCurrentLine());
         Optional<String> lastNumber = findLastNumber(input.getCurrentLine());
         if (firstNumber.isPresent() && lastNumber.isPresent()) {

@@ -27,7 +27,7 @@ public abstract class NumberParser {
 
     protected abstract String concat(String var1, String var2);
 
-    public static int parseNumbersAndWordNumbersFromText(Input input) {
+    public static long parseNumbersAndWordNumbersFromText(Input input) {
         Optional<String> firstValue = (new ForwardParser(input.getCurrentLine())).findValue();
         Optional<String> lastValue = (new BackwardParser(input.getCurrentLine())).findValue();
         if (firstValue.isPresent() && lastValue.isPresent()) {

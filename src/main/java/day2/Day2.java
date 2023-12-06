@@ -12,15 +12,15 @@ public class Day2 {
     private static final String INPUT_FILE = "src/main/resources/day2/input.txt";
     // Use the example_input to check based on the problem description example
     private static final String EXAMPLE_INPUT_FILE = "src/main/resources/day2/example_input.txt";
-    public static int phase1() {
+    public static long phase1() {
         return processFile(Day2::parseGameValidity, INPUT_FILE);
     }
 
-    public static int phase2() {
+    public static long phase2() {
         return processFile(Day2::calculateFewestStones, INPUT_FILE);
     }
 
-    private static int parseGameValidity(Input input) {
+    private static long parseGameValidity(Input input) {
         Game game = parseGame(input.getCurrentLine());
         if (Validator.isValid(game)) {
             return game.getNumber();
@@ -28,7 +28,7 @@ public class Day2 {
         return 0;
     }
 
-    private static int calculateFewestStones(Input input) {
+    private static long calculateFewestStones(Input input) {
         Game game = parseGame(input.getCurrentLine());
         return calculateGamePower(game);
     }
