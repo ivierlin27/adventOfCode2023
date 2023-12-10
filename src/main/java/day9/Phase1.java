@@ -2,33 +2,21 @@ package main.java.day9;
 
 import main.java.domain.Input;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Phase1 {
     protected static long parseInput(Input input) {
-        List<Long> initialInput = Arrays.stream(input.getCurrentLine().split(" "))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-        List<List<Long>> diffs = new ArrayList<>();
-        diffs.add(initialInput);
-        List<Long> diff = calculateDiff(initialInput);
-        diffs.add(diff);
-        while(!diff.stream().allMatch(value -> value == 0)) {
-            diff = calculateDiff(diff);
-            diffs.add(diff);
-        }
+        List<List<Long>> diffs = Day9.parseInput(input);
 
-        Collections.reverse(diffs);
+        fillForwards(diffs);
 
+        return diffs.getLast().getLast();
+    }
+
+    public static void fillForwards(List<List<Long>> diffs) {
         for (int x = 0; x < diffs.size(); x++) {
             diffs.get(x).add(calculateNextVal(diffs, x));
         }
-
-        return diffs.getLast().getLast();
     }
 
     private static long calculateNextVal(List<List<Long>> diffs, int x) {
@@ -39,13 +27,5 @@ public class Phase1 {
         } else {
             return lastVal + diffs.get(x - 1).getLast();
         }
-    }
-
-    private static List<Long> calculateDiff(List<Long> input) {
-        List<Long> diff = new ArrayList<>();
-        for (int x = 0; x < input.size() - 1; x++) {
-            diff.add(input.get(x + 1) - input.get(x));
-        }
-        return diff;
     }
 }
