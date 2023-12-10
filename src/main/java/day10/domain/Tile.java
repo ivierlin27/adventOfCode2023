@@ -20,6 +20,10 @@ public class Tile {
         this.row = row;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public int getColumn() {
         return column;
     }

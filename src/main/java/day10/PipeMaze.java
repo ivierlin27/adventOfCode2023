@@ -22,17 +22,25 @@ public class PipeMaze {
     public static final String DIRECTION_EAST = "E";
     public static final String DIRECTION_SOUTH = "S";
     public static final String DIRECTION_WEST = "W";
-    Map<Integer, String> grid = new HashMap<>();
+    private final Map<Integer, String> grid = new HashMap<>();
 
-    int lineNumber = 0;
+    private int lineNumber = 0;
 
-    Tile start;
+    private Tile start;
 
     public PipeMaze() {
     }
 
     public Tile getStart() {
         return start;
+    }
+
+    public int getGridColumnSize() {
+        return grid.get(0).length();
+    }
+
+    public int getGridRowSize() {
+        return grid.size();
     }
 
     public long loadInputLine(Input input) {
