@@ -2,14 +2,23 @@ package main.java.day8;
 
 import main.java.day8.domain.Node;
 import main.java.day8.domain.NodeMap;
+import org.apache.commons.math3.util.ArithmeticUtils;
 
-public class Phase1 {
+import java.util.List;
 
-    public static long followPath(NodeMap nodeMap) {
-        String currentLocation = "AAA";
+public class Phase2 {
+
+    public static long followPaths(NodeMap nodeMap) {
+        List<String> currentLocations = nodeMap.getNodes().keySet().stream().filter(key -> key.endsWith("A")).toList();
+
+        return currentLocations.stream().map(location -> followPath(nodeMap, location)).reduce(1L, ArithmeticUtils::lcm);
+    }
+
+    public static long followPath(NodeMap nodeMap, String initialLocation) {
+        String currentLocation = initialLocation;
         int x = 0;
         int steps = 0;
-        while (!currentLocation.equals("ZZZ")) {
+        while (!currentLocation.endsWith("Z")) {
             steps++;
             char direction = nodeMap.getDirections().charAt(x);
             Node node = nodeMap.getNodes().get(currentLocation);
