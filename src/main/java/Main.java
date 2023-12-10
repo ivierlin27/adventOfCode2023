@@ -1,11 +1,5 @@
 package main.java;
 
-import main.java.day1.Day1;
-import main.java.day2.Day2;
-import main.java.day3.Day3;
-import main.java.day4.Day4;
-import main.java.day5.Day5;
-import main.java.day6.Day6;
 import main.java.day7.Day7;
 
 import java.time.Duration;
@@ -26,7 +20,8 @@ public class Main {
 //        duration("Day 5, phase 2: ", Day5::phase2); // too slow!
 //        duration("Day 6, phase 1: ", Day6::phase1);
 //        duration("Day 6, phase 2: ", Day6::phase2);
-        duration("Day 7, phase 1: ", Day7::phase1);
+//        duration("Day 7, phase 1: ", Day7::phase1);
+        duration("Day 7, phase 2: ", Day7::phase2);
     }
 
     private static <T> void duration(String message, Supplier<? extends T> function) {
