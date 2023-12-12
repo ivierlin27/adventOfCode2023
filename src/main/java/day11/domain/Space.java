@@ -1,7 +1,6 @@
 package main.java.day11.domain;
 
 import main.java.domain.Input;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -10,11 +9,10 @@ import java.util.Map;
 
 public class Space {
     public static final String GALAXY = "#";
-    public static final String EMPTY_SPACE = ".";
     private final Map<Integer, String> grid = new LinkedHashMap<>();
     private final List<Galaxy> galaxies = new ArrayList<>();
-    private final Map<Integer, String> expandedGrid = new LinkedHashMap<>();
-    private final List<Galaxy> expandedGalaxies = new ArrayList<>();
+    private final List<Integer> rowsToExpand = new ArrayList<>();
+    private final List<Integer> columnsToExpand = new ArrayList<>();
     private int lineNumber = 0;
 
     public long loadInputLine(Input input) {
@@ -22,48 +20,37 @@ public class Space {
         lineNumber++;
         if (input.isLastLine()) {
             locateGalaxies(grid, galaxies);
-            expandSpace();
-            locateGalaxies(expandedGrid, expandedGalaxies);
-            return calculateShortestPaths(expandedGalaxies);
+            rowsToExpand.addAll(calculateRowsToExpand());
+            columnsToExpand.addAll(calculateColumnsToExpand());
         }
         return 0;
     }
 
-    private long calculateShortestPaths(List<Galaxy> expandedGalaxies) {
+    public long calculateShortestPaths(int expansionMultiplier) {
         long total = 0;
-        for (int x = 0; x < expandedGalaxies.size(); x++) {
-            for (int y = x + 1; y < expandedGalaxies.size(); y++) {
-                total += calculatePath(expandedGalaxies.get(x), expandedGalaxies.get(y));
+        for (int x = 0; x < galaxies.size(); x++) {
+            for (int y = x + 1; y < galaxies.size(); y++) {
+                total += calculatePath(galaxies.get(x), galaxies.get(y), expansionMultiplier);
             }
         }
         return total;
     }
 
-    private long calculatePath(Galaxy galaxy, Galaxy otherGalaxy) {
-        return Math.abs(galaxy.column - otherGalaxy.column) + Math.abs(galaxy.row - otherGalaxy.row);
-    }
-
-    private void expandSpace() {
-        List<Integer> rowsToExpand = calculateRowsToExpand();
-        List<Integer> columnsToExpand = calculateColumnsToExpand();
-
-        int newLineNumber = 0;
-        for (Map.Entry<Integer, String> entry : grid.entrySet()) {
-            String row = expandColumnsOfCurrentRow(entry.getValue(), columnsToExpand);
-            expandedGrid.put(newLineNumber, row);
-            newLineNumber++;
-            if (rowsToExpand.contains(entry.getKey())) {
-                expandedGrid.put(newLineNumber, row);
-                newLineNumber++;
+    private long calculatePath(Galaxy galaxy, Galaxy otherGalaxy, int expansionMultiplier) {
+        long columnMultiplierCount = 0;
+        for (Integer column : columnsToExpand) {
+            if (Math.min(galaxy.column, otherGalaxy.column) < column && Math.max(galaxy.column, otherGalaxy.column) > column) {
+                columnMultiplierCount++;
             }
         }
-    }
-
-    private String expandColumnsOfCurrentRow(String row, List<Integer> columnsToExpand) {
-        for (Integer column : columnsToExpand.reversed()) {
-            row = StringUtils.overlay(row, EMPTY_SPACE, column, column);
+        long rowMultiplierCount = 0;
+        for (Integer row : rowsToExpand) {
+            if (Math.min(galaxy.row, otherGalaxy.row) < row && Math.max(galaxy.row, otherGalaxy.row) > row) {
+                rowMultiplierCount++;
+            }
         }
-        return row;
+        return Math.abs(galaxy.column - otherGalaxy.column) + Math.abs(galaxy.row - otherGalaxy.row) +
+                ((columnMultiplierCount + rowMultiplierCount) * (expansionMultiplier - 1));
     }
 
     private List<Integer> calculateRowsToExpand() {
