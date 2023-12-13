@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Phase1 {
+public class SpringEvaluator {
     public static final Character OPERATIONAL = '.';
     public static final Character DAMAGED = '#';
     public static final Character UNKNOWN = '?';
