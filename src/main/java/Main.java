@@ -1,6 +1,6 @@
 package main.java;
 
-import main.java.day12.Day12;
+import main.java.day13.Day13;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -31,7 +31,9 @@ public class Main {
 //        duration("Day 11, phase 1: ", Day11::phase1);
 //        duration("Day 11, phase 2: ", Day11::phase2);
 //        duration("Day 12, phase 1: ", Day12::phase1);
-        duration("Day 12, phase 2: ", Day12::phase2);
+//        duration("Day 12, phase 2: ", Day12::phase2);
+//        duration("Day 13, phase 1: ", Day13::phase1);
+        duration("Day 13, phase 2: ", Day13::phase2);
     }
 
     private static <T> void duration(String message, Supplier<? extends T> function) {
