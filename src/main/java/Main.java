@@ -34,7 +34,8 @@ public class Main {
 //        duration("Day 12, phase 2: ", Day12::phase2);
 //        duration("Day 13, phase 1: ", Day13::phase1);
 //        duration("Day 13, phase 2: ", Day13::phase2);
-        duration("Day 14, phase 1: ", Day14::phase1);
+//        duration("Day 14, phase 1: ", Day14::phase1);
+        duration("Day 14, phase 2: ", Day14::phase2);
     }
 
     private static <T> void duration(String message, Supplier<? extends T> function) {
