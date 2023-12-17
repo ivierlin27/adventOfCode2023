@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MirrorMaze {
-    private static final char EAST = 'e';
+    public static final char EAST = 'e';
     private static final char SOUTH = 's';
     private static final char WEST = 'w';
     private static final char NORTH = 'n';
@@ -24,12 +24,24 @@ public class MirrorMaze {
         return 0;
     }
 
-    public long start() {
+    public long start(Pos startingPos, char direction) {
         Map<Pos, Boolean> energized = new HashMap<>();
-        Pos currentPos = new Pos(0, 0);
-        followBeam(energized, EAST, currentPos);
+        followBeam(energized, direction, startingPos);
 
         return calculateEnergized(energized);
+    }
+
+    public long phase2() {
+        List<Long> energizedValues = new ArrayList<>();
+        for (int i = 0; i < layout.size(); i++) {
+            energizedValues.add(start(new Pos(0, i), EAST));
+            energizedValues.add(start(new Pos(layout.getFirst().length() - 1, i), WEST));
+        }
+        for (int i = 0; i < layout.getFirst().length(); i++) {
+            energizedValues.add(start(new Pos(i, 0), SOUTH));
+            energizedValues.add(start(new Pos(i, layout.size() - 1), NORTH));
+        }
+        return energizedValues.stream().max(Long::compareTo).orElseThrow();
     }
 
     private boolean splitterAlreadyTouched(Map<Pos, Boolean> energized, Pos pos) {
