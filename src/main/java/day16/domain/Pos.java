@@ -31,4 +31,12 @@ public class Pos {
     public int hashCode() {
         return Objects.hash(col, row);
     }
+
+    @Override
+    public String toString() {
+        return "Pos{" +
+                col +
+                ", " + row +
+                '}';
+    }
 }
