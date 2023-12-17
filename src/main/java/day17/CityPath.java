@@ -33,13 +33,17 @@ public class CityPath {
     }
 
     public long start() {
-        return followPath(CityPath::lessThan3StepsOrTurn);
+        return followPath(1, CityPath::lessThan3StepsOrTurn);
     }
 
-    private long followPath(BiFunction<State, Character, Boolean> isValidNext) {
+    public long phase2() {
+        return followPath(4, CityPath::lessThan10StepsAndTurnOrAtLeast4StepsStraight);
+    }
+
+    private long followPath(int min, BiFunction<State, Character, Boolean> isValidNext) {
         Pos end = new Pos(city.getFirst().length() - 1, city.size() - 1);
         Set<State> visited = new HashSet<>();
-        PriorityQueue<Work> queue = new PriorityQueue<Work>();
+        PriorityQueue<Work> queue = new PriorityQueue<>();
 
         State startingState = new State(STARTING_POS, RIGHT, 0);
         queue.add(new Work(startingState, 0));
@@ -47,7 +51,7 @@ public class CityPath {
 
         while (!queue.isEmpty()) {
             Work work = queue.poll();
-            if (work.state().location().equals(end)) {
+            if (work.state().location().equals(end) && work.state().singleDirection() >= min) {
                 return work.heatLoss();
             }
 
@@ -66,6 +70,16 @@ public class CityPath {
 
     private static boolean lessThan3StepsOrTurn(State state, char nextDirection) {
         return state.singleDirection() < 3 || state.direction() != nextDirection;
+    }
+
+    private static boolean lessThan10StepsAndTurnOrAtLeast4StepsStraight(State state, char nextDirection) {
+        if (state.singleDirection() > 9) {
+            return state.direction() != nextDirection;
+        } else if (state.singleDirection() <= 3) {
+            return state.direction() == nextDirection;
+        } else {
+            return true;
+        }
     }
 
     private int getTileAtPos(Pos pos) {

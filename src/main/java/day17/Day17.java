@@ -3,6 +3,7 @@ package main.java.day17;
 import static main.java.FileProcessorUtil.processFile;
 
 // Phase 1: 1128 @ 11:29am 12/17 (correct!)
+// Phase 2: 1268 @ 11:48am 12/17 (correct!)
 public class Day17 {
     private static final String INPUT_FILE = "src/main/resources/day17/input.txt";
     // Use the example_input to check based on the problem description example
@@ -11,5 +12,11 @@ public class Day17 {
         CityPath cityPath = new CityPath();
         processFile(cityPath::loadMap, INPUT_FILE);
         return cityPath.start();
+    }
+
+    public static long phase2() {
+        CityPath cityPath = new CityPath();
+        processFile(cityPath::loadMap, INPUT_FILE);
+        return cityPath.phase2();
     }
 }
