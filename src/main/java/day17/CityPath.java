@@ -83,10 +83,10 @@ public class CityPath {
     }
 
     private int getTileAtPos(Pos pos) {
-        return positionInCity(pos) ? Character.getNumericValue(city.get(pos.getRow()).charAt(pos.getCol())) : -1;
+        return positionInCity(pos) ? Character.getNumericValue(city.get(pos.row()).charAt(pos.col())) : -1;
     }
 
     private boolean positionInCity(Pos pos) {
-        return (pos.getRow() >= 0 && pos.getCol() >= 0 && pos.getRow() < city.size() && pos.getCol() < city.getFirst().length());
+        return (pos.row() >= 0 && pos.col() >= 0 && pos.row() < city.size() && pos.col() < city.getFirst().length());
     }
 }

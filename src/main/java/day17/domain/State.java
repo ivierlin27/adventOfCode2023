@@ -18,10 +18,10 @@ public record State(Pos location, char direction, int singleDirection) {
 
     private Pos getNextPos(Pos pos, char direction) {
         return switch (direction) {
-            case UP -> new Pos(pos.getCol(), pos.getRow() - 1);
-            case DOWN -> new Pos(pos.getCol(), pos.getRow() + 1);
-            case LEFT -> new Pos(pos.getCol() - 1, pos.getRow());
-            default -> new Pos(pos.getCol() + 1, pos.getRow());
+            case UP -> new Pos(pos.col(), pos.row() - 1);
+            case DOWN -> new Pos(pos.col(), pos.row() + 1);
+            case LEFT -> new Pos(pos.col() - 1, pos.row());
+            default -> new Pos(pos.col() + 1, pos.row());
         };
     }
 

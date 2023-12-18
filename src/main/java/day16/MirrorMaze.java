@@ -95,7 +95,7 @@ public class MirrorMaze {
     }
 
     private boolean posOffBoard(Pos pos) {
-        return (pos.getRow() < 0 || pos.getCol() < 0 || pos.getRow() >= layout.size() || pos.getCol() >= layout.getFirst().length());
+        return (pos.row() < 0 || pos.col() < 0 || pos.row() >= layout.size() || pos.col() >= layout.getFirst().length());
     }
 
     private long calculateEnergized(Map<Pos, Boolean> energized) {
@@ -104,15 +104,15 @@ public class MirrorMaze {
 
     private Pos move(char direction, Pos currentPos) {
         return switch (direction) {
-            case EAST -> new Pos(currentPos.getCol() + 1, currentPos.getRow());
-            case SOUTH -> new Pos(currentPos.getCol(), currentPos.getRow() + 1);
-            case WEST -> new Pos(currentPos.getCol() - 1, currentPos.getRow());
-            case NORTH -> new Pos(currentPos.getCol(), currentPos.getRow() - 1);
+            case EAST -> new Pos(currentPos.col() + 1, currentPos.row());
+            case SOUTH -> new Pos(currentPos.col(), currentPos.row() + 1);
+            case WEST -> new Pos(currentPos.col() - 1, currentPos.row());
+            case NORTH -> new Pos(currentPos.col(), currentPos.row() - 1);
             default -> null;
         };
     }
 
     private char getTileAtPos(Pos pos) {
-        return layout.get(pos.getRow()).charAt(pos.getCol());
+        return layout.get(pos.row()).charAt(pos.col());
     }
 }
