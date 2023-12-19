@@ -1,6 +1,6 @@
 package main.java.day18;
 
-import main.java.day16.domain.Pos;
+import main.java.day18.domain.Vector;
 import main.java.domain.Input;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -16,68 +16,84 @@ public class LavaLagoon {
     private static final String LEFT = "L";
     private static final String UP = "U";
 
-    private final List<Triple<String, Integer, String>> lagoon = new ArrayList<>();
+    private final List<Triple<String, Long, String>> lagoon = new ArrayList<>();
 
     public long processInstruction(Input input) {
         String[] parts = input.getCurrentLine().split(" ");
-        lagoon.add(Triple.of(parts[0], Integer.parseInt(parts[1]), parts[2].substring(2, 8)));
+        lagoon.add(Triple.of(parts[0], Long.parseLong(parts[1]), parts[2].substring(2, 8)));
 
         return 0;
     }
 
-    public long lavaCapacity(Function<List<Triple<String, Integer, String>>, List<Pos>> digPlan) {
-        return integerPointsFromPickTheorem(shoelaceFormula(cornerPositions(digPlan)), perimeter(digPlan));
+    public long lavaCapacity(Function<List<Triple<String, Long, String>>, List<Vector>> digPlan) {
+        return longPointsFromPickTheorem(shoelaceFormula(cornerVectoritions(digPlan)), perimeter(digPlan));
     }
 
-    public List<Pos> digPlan(List<Triple<String, Integer, String>> triples) {
+    public List<Vector> digPlan(List<Triple<String, Long, String>> triples) {
         return triples.stream()
-                .map(triple ->  multiplyPos(shiftDirection(triple.getLeft()), triple.getMiddle()))
+                .map(triple ->  multiplyVector(shiftDirection(triple.getLeft()), triple.getMiddle()))
                 .toList();
     }
 
-    private long perimeter(Function<List<Triple<String, Integer, String>>, List<Pos>> digPlan) {
+    public List<Vector> colorsDigPlan(List<Triple<String, Long, String>> triples) {
+        return triples.stream()
+                .map(triple -> multiplyVector(
+                        shiftDirection(extractLast(triple.getRight())), extractHexToLong(triple.getRight())))
+                .toList();
+    }
+
+    private String extractLast(String value) {
+        return value.substring(value.length() - 1);
+    }
+
+    private long extractHexToLong(String value) {
+        String withoutLast = value.substring(0, value.length() - 1);
+        return Long.parseLong(withoutLast, 16);
+    }
+
+    private long perimeter(Function<List<Triple<String, Long, String>>, List<Vector>> digPlan) {
         return digPlan.apply(lagoon).stream()
-                .map(pos -> abs(pos.col()) + abs(pos.row()))
-                .reduce(0, Integer::sum);
+                .map(Vector -> abs(Vector.col()) + abs(Vector.row()))
+                .reduce(0L, Long::sum);
     }
 
-    private Pos multiplyPos(Pos pos, int multiplier) {
-        return new Pos((pos.col() * multiplier), (pos.row() * multiplier));
+    private Vector multiplyVector(Vector vector, long multiplier) {
+        return new Vector((vector.col() * multiplier), (vector.row() * multiplier));
     }
 
-    private Pos addPos(Pos pos, Pos otherPos) {
-        return new Pos(pos.col() + otherPos.col(), pos.row() + otherPos.row());
+    private Vector addVector(Vector vector, Vector otherVector) {
+        return new Vector(vector.col() + otherVector.col(), vector.row() + otherVector.row());
     }
 
-    private Pos shiftDirection(String direction) {
+    private Vector shiftDirection(String direction) {
         return switch (direction) {
-            case RIGHT -> new Pos(1, 0);
-            case DOWN -> new Pos(0, 1);
-            case LEFT -> new Pos(-1, 0);
-            case UP -> new Pos(0, -1);
+            case "0", RIGHT -> new Vector(1, 0);
+            case "1", DOWN -> new Vector(0, 1);
+            case "2", LEFT -> new Vector(-1, 0);
+            case "3", UP -> new Vector(0, -1);
             default -> null;
         };
     }
 
-    private List<Pos> cornerPositions(Function<List<Triple<String, Integer, String>>, List<Pos>> digPlan) {
-        List<Pos> result = new ArrayList<>();
-        List<Pos> values = digPlan.apply(lagoon);
-        Pos currentPos = new Pos(0, 0);
-        result.add(currentPos);
+    private List<Vector> cornerVectoritions(Function<List<Triple<String, Long, String>>, List<Vector>> digPlan) {
+        List<Vector> result = new ArrayList<>();
+        List<Vector> values = digPlan.apply(lagoon);
+        Vector currentVector = new Vector(0, 0);
+        result.add(currentVector);
         for (int i = 0; i < values.size() - 1; i++) {
-            currentPos = addPos(currentPos, values.get(i));
-            result.add(currentPos);
+            currentVector = addVector(currentVector, values.get(i));
+            result.add(currentVector);
         }
         return result;
     }
 
-    private long integerPointsFromPickTheorem(long area, long perimeter) {
+    private long longPointsFromPickTheorem(long area, long perimeter) {
         return area + perimeter / 2L + 1L;
     }
 
-    private long shoelaceFormula(List<Pos> corners) {
+    private long shoelaceFormula(List<Vector> corners) {
         int n = corners.size();
-        int area = 0;
+        long area = 0;
         for (int i = 0; i < n - 1; i++) {
             area += corners.get(i).col() * corners.get(i + 1).row() - corners.get(i + 1).col() * corners.get(i).row();
         }
