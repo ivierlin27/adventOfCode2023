@@ -1,11 +1,11 @@
-package main.resources.day20.domain;
+package main.java.day20.domain;
 
 import org.apache.commons.math3.util.ArithmeticUtils;
 
 import java.util.Map;
 
-import static main.resources.day20.domain.PulseType.HIGH;
-import static main.resources.day20.domain.PulseType.LOW;
+import static main.java.day20.domain.PulseType.HIGH;
+import static main.java.day20.domain.PulseType.LOW;
 
 public final class Counter {
     Map<String, Long> cnt;

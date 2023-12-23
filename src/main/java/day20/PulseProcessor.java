@@ -1,13 +1,13 @@
-package main.resources.day20;
+package main.java.day20;
 
 import main.java.domain.Input;
-import main.resources.day20.domain.Broadcast;
-import main.resources.day20.domain.Conjunction;
-import main.resources.day20.domain.Counter;
-import main.resources.day20.domain.FlipFlop;
-import main.resources.day20.domain.Module;
-import main.resources.day20.domain.ModuleType;
-import main.resources.day20.domain.WorkItem;
+import main.java.day20.domain.Broadcast;
+import main.java.day20.domain.Conjunction;
+import main.java.day20.domain.Counter;
+import main.java.day20.domain.FlipFlop;
+import main.java.day20.domain.Module;
+import main.java.day20.domain.ModuleType;
+import main.java.day20.domain.WorkItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,11 +17,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static main.resources.day20.domain.ModuleType.BROADCAST;
-import static main.resources.day20.domain.ModuleType.CONJUNCTION;
-import static main.resources.day20.domain.ModuleType.FLIP_FLOP;
-import static main.resources.day20.domain.PulseType.HIGH;
-import static main.resources.day20.domain.PulseType.LOW;
+import static main.java.day20.domain.ModuleType.BROADCAST;
+import static main.java.day20.domain.ModuleType.CONJUNCTION;
+import static main.java.day20.domain.ModuleType.FLIP_FLOP;
+import static main.java.day20.domain.PulseType.HIGH;
+import static main.java.day20.domain.PulseType.LOW;
 
 public class PulseProcessor {
 

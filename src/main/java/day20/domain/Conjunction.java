@@ -1,11 +1,11 @@
-package main.resources.day20.domain;
+package main.java.day20.domain;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static main.resources.day20.domain.PulseType.HIGH;
-import static main.resources.day20.domain.PulseType.LOW;
+import static main.java.day20.domain.PulseType.HIGH;
+import static main.java.day20.domain.PulseType.LOW;
 
 public class Conjunction extends Module {
     private Map<String, PulseType> memory = new HashMap<>();

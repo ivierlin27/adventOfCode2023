@@ -1,4 +1,4 @@
-package main.resources.day20.domain;
+package main.java.day20.domain;
 
 import java.util.List;
 

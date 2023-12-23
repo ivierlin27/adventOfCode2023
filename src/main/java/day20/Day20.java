@@ -1,7 +1,5 @@
 package main.java.day20;
 
-import main.resources.day20.PulseProcessor;
-
 import static main.java.FileProcessorUtil.processFile;
 
 // Phase 1: 1009142 @ 9:58pm 12/20 (too low)
