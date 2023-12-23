@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static main.resources.day20.domain.ModuleType.BROADCAST;
@@ -24,6 +25,9 @@ import static main.resources.day20.domain.PulseType.LOW;
 
 public class PulseProcessor {
 
+    public static final String BROADCASTER_NAME = "broadcaster";
+    public static final String EMPTY_STRING = "";
+    private static final String RX_NAME = "rx";
     Map<String, Module> modules = new HashMap<>();
     public long loadModules(Input input) {
         String[] parts = input.getCurrentLine().split(" ");
@@ -36,7 +40,7 @@ public class PulseProcessor {
         String name = type.equals(BROADCAST) ? parts[0] : parts[0].substring(1);
         List<String> destinations = new ArrayList<>();
         for (int i = 2; i < parts.length; i++) {
-            destinations.add(parts[i].replace(",", ""));
+            destinations.add(parts[i].replace(",", EMPTY_STRING));
         }
         switch (type) {
             case BROADCAST -> modules.put(name, new Broadcast(name, destinations));
@@ -57,20 +61,38 @@ public class PulseProcessor {
     }
 
     public long pushButton(int numTimes) {
-        Counter counter = new Counter(0, 0);
-        IntStream.range(0, numTimes).forEach(x -> pushButtonOnce(counter));
+        Counter counter = new Counter(new HashMap<>(Map.of(LOW.name(), 0L, HIGH.name(), 0L)));
+        IntStream.range(0, numTimes).forEach(x -> pushButtonOnce(counter, x, null));
         return counter.score();
     }
 
-    public void pushButtonOnce(Counter counter) {
-        LinkedList<WorkItem> queue = new LinkedList<>(List.of(new WorkItem("broadcaster", LOW, "")));
+    public long pushButtonForRx() {
+        String modulePointingToRxName = modules.values().stream()
+                .filter(module -> module.getDestinations().contains(RX_NAME))
+                .map(Module::getName)
+                .findFirst().orElseThrow();
+        Counter modulePointingToRxInputsCounts = new Counter(modules.values().stream()
+                .filter(module -> module.getDestinations().contains(modulePointingToRxName))
+                .collect(Collectors.toMap(Module::getName, v -> 0L)));
+        long count = 0L;
+
+        while (modulePointingToRxInputsCounts.hasAnyInputNotTouched()) {
+            count++;
+
+            pushButtonOnce(modulePointingToRxInputsCounts, count, modulePointingToRxName);
+        }
+        return modulePointingToRxInputsCounts.getLCM();
+    }
+
+    private void pushButtonOnce(Counter counter, long pushCnt, String phase2ModName) {
+        LinkedList<WorkItem> queue = new LinkedList<>(List.of(new WorkItem(BROADCASTER_NAME, LOW, EMPTY_STRING)));
 
         while (!queue.isEmpty()) {
             WorkItem work = queue.removeFirst();
-            if (work.pulseType().equals(LOW)) {
-                counter.incrementLow();
-            } else if (work.pulseType().equals(HIGH)) {
-                counter.incrementHigh();
+            if (phase2ModName != null) {
+                counter.countModulePointingToRx(work, pushCnt, phase2ModName);
+            } else {
+                counter.countPulse(work);
             }
             if (modules.containsKey(work.destination())) {
                 Module module = modules.get(work.destination());
