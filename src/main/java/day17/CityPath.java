@@ -56,7 +56,7 @@ public class CityPath {
             }
 
             DIRECTIONS.get(work.state().direction()).stream()
-                    .filter(direction -> positionInCity(work.state().next(direction).location()))
+                    .filter(direction -> work.state().next(direction).location().inBounds(city))
                     .filter(direction -> isValidNext.apply(work.state(), direction))
                     .map(direction -> work.state().next(direction))
                     .filter(state -> !visited.contains(state))
@@ -83,10 +83,6 @@ public class CityPath {
     }
 
     private int getTileAtPos(Pos pos) {
-        return positionInCity(pos) ? Character.getNumericValue(city.get(pos.row()).charAt(pos.col())) : -1;
-    }
-
-    private boolean positionInCity(Pos pos) {
-        return (pos.row() >= 0 && pos.col() >= 0 && pos.row() < city.size() && pos.col() < city.getFirst().length());
+        return pos.inBounds(city) ? Character.getNumericValue(city.get(pos.row()).charAt(pos.col())) : -1;
     }
 }

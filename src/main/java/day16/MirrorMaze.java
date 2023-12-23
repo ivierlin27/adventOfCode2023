@@ -50,7 +50,7 @@ public class MirrorMaze {
     }
 
     private void followBeam(Map<Pos, Boolean> energized, char direction, Pos currentPos) {
-        if (posOffBoard(currentPos) || splitterAlreadyTouched(energized, currentPos)) {
+        if (!currentPos.inBounds(layout) || splitterAlreadyTouched(energized, currentPos)) {
             return;
         } else {
             energized.put(currentPos, true);
@@ -92,10 +92,6 @@ public class MirrorMaze {
                 default -> followBeam(energized, direction, move(direction, currentPos));
             }
         }
-    }
-
-    private boolean posOffBoard(Pos pos) {
-        return (pos.row() < 0 || pos.col() < 0 || pos.row() >= layout.size() || pos.col() >= layout.getFirst().length());
     }
 
     private long calculateEnergized(Map<Pos, Boolean> energized) {
