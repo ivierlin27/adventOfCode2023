@@ -1,6 +1,6 @@
 package main.java.day16;
 
-import main.java.day16.domain.Pos;
+import main.java.domain.Pos;
 import main.java.domain.Input;
 
 import java.util.ArrayList;

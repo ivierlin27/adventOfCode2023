@@ -1,4 +1,4 @@
-package main.java.day16.domain;
+package main.java.domain;
 
 public record Pos(int col, int row) {
 

@@ -1,6 +1,6 @@
 package main.java.day17;
 
-import main.java.day16.domain.Pos;
+import main.java.domain.Pos;
 import main.java.day17.domain.State;
 import main.java.day17.domain.Work;
 import main.java.domain.Input;

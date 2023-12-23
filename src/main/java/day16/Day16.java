@@ -1,6 +1,6 @@
 package main.java.day16;
 
-import main.java.day16.domain.Pos;
+import main.java.domain.Pos;
 
 import static main.java.FileProcessorUtil.processFile;
 import static main.java.day16.MirrorMaze.EAST;

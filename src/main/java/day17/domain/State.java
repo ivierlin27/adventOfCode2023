@@ -1,6 +1,6 @@
 package main.java.day17.domain;
 
-import main.java.day16.domain.Pos;
+import main.java.domain.Pos;
 
 import java.util.Objects;
 
