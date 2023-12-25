@@ -77,7 +77,7 @@ public class Garden {
 
     private void calculatePossibleMoves(Pos pos, Collection<Pos> path) {
         for (Direction direction : Direction.values()) {
-            Pos p = direction.move(pos);
+            Pos p = Direction.move(pos, direction);
             if (p.inBounds(layout) && validWalkingTile(p)) {
                 path.add(p);
             } else {
@@ -90,7 +90,7 @@ public class Garden {
 
     private void calculatePossibleMovesInfinite(Pos pos, Collection<Pos> path) {
         for (Direction direction : Direction.values()) {
-            Pos p = direction.move(pos);
+            Pos p = Direction.move(pos, direction);
             int row = p.row() % layout.size();
             if (row < 0) {
                 row += layout.size();
