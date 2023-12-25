@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import static main.java.day21.domain.Direction.EAST;
 import static main.java.day21.domain.Direction.NORTH;
@@ -38,18 +39,24 @@ public class PathFinder {
     public long findLongestPath() {
         Set<Pos> visited = new HashSet<>();
 
-        return walkPath(startingPoint, 0, visited);
+        return walkPath(startingPoint, 0, visited, this::nextLocations);
     }
 
-    private long walkPath(Pos pos, long steps, Set<Pos> visited) {
+    public long findLongestPathWithFeeling() {
+        Set<Pos> visited = new HashSet<>();
+
+        return walkPath(startingPoint, 0, visited, this::nextLocationsPhase2);
+    }
+
+    private long walkPath(Pos pos, long steps, Set<Pos> visited, Function<Pos, List<PosWithDistance>> newLocations) {
         if (pos.equals(endingPoint)) {
             longest = Math.max(steps, longest);
             return longest;
         }
         visited.add(pos);
-        nextLocations(pos).stream()
+        newLocations.apply(pos).stream()
                 .filter(posWithDistance -> !visited.contains(posWithDistance.pos()))
-                .forEach(posWithDistance -> walkPath(posWithDistance.pos(), posWithDistance.distance() + steps, visited));
+                .forEach(posWithDistance -> walkPath(posWithDistance.pos(), posWithDistance.distance() + steps, visited, newLocations));
         visited.remove(pos);
         return longest;
     }
@@ -70,6 +77,22 @@ public class PathFinder {
             case 'v' -> SOUTH == getDirectionBetweenPoints(currentPos, newPos);
             case '>' -> EAST == getDirectionBetweenPoints(currentPos, newPos);
             case '.' -> true;
+            default -> false;
+        };
+    }
+
+    private List<PosWithDistance> nextLocationsPhase2(Pos pos) {
+        return Direction.getPosAtEachCardinalNeighbor(pos).stream()
+                .filter(direction -> pos.inBounds(walkingMap))
+                .filter(newPos -> matchesDirection(pos))
+                .map(newPos -> new PosWithDistance(newPos, 1))
+                .toList();
+    }
+
+    private boolean matchesDirection(Pos currentPos) {
+        char tile = currentPos.getTileAtPos(walkingMap);
+        return switch (tile) {
+            case '^', '>', '<', 'v', '.' -> true;
             default -> false;
         };
     }

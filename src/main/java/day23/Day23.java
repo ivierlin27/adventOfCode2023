@@ -3,6 +3,7 @@ package main.java.day23;
 import static main.java.FileProcessorUtil.processFile;
 
 // Phase 1: 2442 @ 9:12pm 12/24 (correct!)
+// Phase 2: 6898 @ 5:18am 12/25 (correct!)
 public class Day23 {
     private static final String INPUT_FILE = "src/main/resources/day23/input.txt";
     // Use the example_input to check based on the problem description example
@@ -11,5 +12,11 @@ public class Day23 {
         PathFinder pathFinder = new PathFinder();
         processFile(pathFinder::loadMap, INPUT_FILE);
         return pathFinder.findLongestPath();
+    }
+
+    public static long phase2() {
+        PathFinder pathFinder = new PathFinder();
+        processFile(pathFinder::loadMap, INPUT_FILE);
+        return pathFinder.findLongestPathWithFeeling();
     }
 }
