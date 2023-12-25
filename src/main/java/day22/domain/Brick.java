@@ -139,6 +139,10 @@ public final class Brick {
         return end1;
     }
 
+    private long id() {
+        return id;
+    }
+
     public Set<Brick> supports() {
         return supports;
     }
@@ -163,8 +167,8 @@ public final class Brick {
                 id +
                 ": " + end1 +
                 " -> " + end2 +
-                " supports: " + supports.stream().map(brick -> new Brick(brick.id, brick.end1, brick.end2)).toList() +
-                " supported by: " + supportedBy.stream().map(brick -> new Brick(brick.id, brick.end1, brick.end2)).toList() +
+                " supports: " + supports.stream().map(Brick::id).toList() +
+                " supported by: " + supportedBy.stream().map(Brick::id).toList() +
                 '}';
     }
 }

@@ -6,6 +6,7 @@ import main.java.domain.Input;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,13 +31,38 @@ public class Jenga {
                 b.identifySupports(block);
             });
 //            block.forEach(System.out::println);
-            return calculateDestroyable();
         }
         return 0;
     }
 
-    private long calculateDestroyable() {
+    public long calculateDestroyable() {
         return bricksThatSupportBricksSupportedAlready().size();
+    }
+
+    public long calculateAllFalling() {
+        return block.stream().mapToLong(this::numDestroyed).sum();
+    }
+
+    private long numDestroyed(Brick brick) {
+        Set<Brick> removed = new HashSet<>();
+        getDestroyed(brick, removed);
+        removed.remove(brick); // current brick isn't counted, just those that fall because of it
+        return removed.size();
+    }
+
+    private void getDestroyed(Brick brick, Set<Brick> removed) {
+        if (!brick.supports().isEmpty()) {
+            removed.add(brick);
+
+            List<Brick> bricksToDestroy = brick.supports().stream()
+                    .filter(support -> removed.containsAll(support.supportedBy()))
+                    .toList();
+
+            if (!bricksToDestroy.isEmpty()) {
+                removed.addAll(bricksToDestroy);
+                bricksToDestroy.forEach(b -> getDestroyed(b, removed));
+            }
+        }
     }
 
     private Set<Brick> bricksThatSupportBricksSupportedAlready() {
