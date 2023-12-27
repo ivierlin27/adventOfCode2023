@@ -34,6 +34,82 @@ public class Hailstorm {
         return intersections;
     }
 
+    public long calculatePosition() {
+        HailStone pos = findThrowingLocation();
+
+        return pos.x() + pos.y() + pos.z();
+    }
+
+    private HailStone findThrowingLocation() {
+        double[] rhs = calculateRhsForXYVxVy();
+
+        long x = Math.round(rhs[0]);
+        long y = Math.round(rhs[1]);
+        long vx = Math.round(rhs[2]);
+        long vy = Math.round(rhs[3]);
+
+        rhs = calculateRhsForZVz(x, vx);
+
+        long z = Math.round(rhs[0]);
+        long vz = Math.round(rhs[1]);
+
+        return new HailStone(x, y, z, vx, vy, vz);
+    }
+
+    private double[] calculateRhsForXYVxVy() {
+        double[][] coefficients = new double[4][4];
+        double[] rhs = new double[4];
+
+        for (int i = 0; i < 4; i++) {
+            HailStone h1 = hailStones.get(i);
+            HailStone h2 = hailStones.get(i + 1);
+            coefficients[i][0] = h2.vy() - h1.vy();
+            coefficients[i][1] = h1.vx() - h2.vx();
+            coefficients[i][2] = h1.y() - h2.y();
+            coefficients[i][3] = h2.x() - h1.x();
+            rhs[i] = -h1.x() * h1.vy() + h1.y() * h1.vx() + h2.x() * h2.vy() - h2.y() * h2.vx();
+        }
+
+        gaussianElimination(coefficients, rhs);
+        return rhs;
+    }
+
+    private double[] calculateRhsForZVz(long x, long vx) {
+        double[][] coefficients = new double[2][2];
+        double[] rhs = new double[2];
+        for (int i = 0; i < 2; i++) {
+            HailStone h1 = hailStones.get(i);
+            HailStone h2 = hailStones.get(i + 1);
+            coefficients[i][0] = h1.vx() - h2.vx();
+            coefficients[i][1] = h2.x() - h1.x();
+            rhs[i] = -h1.x() * h1.vz() + h1.z() * h1.vx() + h2.x() * h2.vz() - h2.z() * h2.vx()
+                    - ((h2.vz() - h1.vz()) * x) - ((h1.z() - h2.z()) * vx);
+        }
+
+        gaussianElimination(coefficients, rhs);
+        return rhs;
+    }
+
+    private void gaussianElimination(double[][] coefficients, double[] rhs) {
+        int numVars = coefficients.length;
+        for (int i = 0; i < numVars; i++) {
+            double pivot = coefficients[i][i];
+            for (int j = 0; j < numVars; j++) {
+                coefficients[i][j] = coefficients[i][j] / pivot;
+            }
+            rhs[i] = rhs[i] / pivot;
+            for (int k = 0; k < numVars; k++) {
+                if (k != i) {
+                    double factor = coefficients[k][i];
+                    for (int j = 0; j < numVars; j++) {
+                        coefficients[k][j] = coefficients[k][j] - factor * coefficients[i][j];
+                    }
+                    rhs[k] = rhs[k] - factor * rhs[i];
+                }
+            }
+        }
+    }
+
     private boolean intersectionInRange(IntersectionPoint intersectionPoint, long rangeStart, long rangeEnd) {
         return rangeStart <= intersectionPoint.x() && intersectionPoint.x() < rangeEnd &&
                 rangeStart <= intersectionPoint.y() && intersectionPoint.y() < rangeEnd;
