@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.day24.Day24;
+import main.java.day25.Day25;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -55,7 +56,8 @@ public class Main {
 //        duration("Day 23, phase 1: ", Day23::phase1);
 //        duration("Day 23, phase 2: ", Day23::phase2); // way too slow!
 //        duration("Day 24, phase 1: ", Day24::phase1);
-        duration("Day 24, phase 2: ", Day24::phase2);
+//        duration("Day 24, phase 2: ", Day24::phase2);
+        duration("Day 25, phase 1: ", Day25::phase1);
 
     }
 
